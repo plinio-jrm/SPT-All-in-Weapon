@@ -1,9 +1,9 @@
 {
-    "name": "EditDatabase",
-    "version": "1.0.0",
+    "name": "All in Weapon",
+    "version": "3.0.0",
     "main": "src/mod.js",
     "license": "MIT",
-    "author": "Chomp",
+    "author": "PlinioJRM",
     "akiVersion": "~3.8",
 	"loadBefore": [],
 	"loadAfter": [],

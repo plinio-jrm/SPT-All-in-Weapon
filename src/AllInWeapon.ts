@@ -92,6 +92,8 @@ export class AllInWeapon {
                 }
             }
         });
+
+        this.logger.success(ModConstants.ANYAMMO_MSG);
     }
 
     private processMagazines(): void {
@@ -115,10 +117,35 @@ export class AllInWeapon {
                 }
             }
         });
+
+        this.logger.success(ModConstants.ANYMAG_MSG);
     }
 
     private processCursed(): void {
+        if (this.settings.Cursed === false)
+            return;
 
+        this.itemsForFunc((item) => {
+            if (item._props.Slots === undefined)
+                return;
+            if (item._props.ConflictingItems !== undefined)
+                item._props.ConflictingItems = [];
+
+            for (const slotIndex in item._props.Slots) {
+                const slot: Slot = item._props.Slots[slotIndex];
+                if (slot._name === ModConstants.MAG_SLOT_NAME)
+                    continue;
+
+                for (const slotFilterIndex in slot._props.filters) {
+                    const slotFilter: SlotFilter = slot._props.filters[slotFilterIndex];
+
+                    slotFilter.Filter = [];
+                    slotFilter.Filter = [...this.allModIdList];
+                }
+            }
+        });
+
+        this.logger.success(ModConstants.CURSED_MSG);
     }
 
     private itemsForFunc(method: (items: ITemplateItem) => void): void {

@@ -8,6 +8,7 @@ export interface Settings {
 }
 
 export interface IDs {
+    Blacklist: string[];
     Ammo: string;
     Magazine: string;
     Weapon: string;

@@ -33,8 +33,10 @@ export class AllInWeapon {
     private setup(): void {
         this.itemsForFunc((item) => {
             // get all items
-            if (item._parent === this.settings.IDs.Ammo)
-                this.ammoIdList.push(item._id);
+            if (item._parent === this.settings.IDs.Ammo) {
+                if (this.settings.IDs.Blacklist.indexOf(item._id) === -1)
+                    this.ammoIdList.push(item._id);
+            }
 
             // get all mods and mods by the slot category
             if (item._props.Slots !== undefined) {

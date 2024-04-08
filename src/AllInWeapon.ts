@@ -7,7 +7,7 @@ import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 import { ITemplateItem, Slot, SlotFilter } from "@spt-aki/models/eft/common/tables/ITemplateItem";
 
 import { Settings } from "./types";
-import { ModConstants } from "./constants";
+import { ModConstants, MessageConstants } from "./constants";
 
 @injectable()
 export class AllInWeapon {
@@ -16,7 +16,7 @@ export class AllInWeapon {
 
     private ammoIdList: string[] = [];
     private allModIdList: string[] = [];
-    private modsIdBySlotCategory: Record<string, string[]>;
+    private modsIdBySlotCategory: Record<string, string[]> = {};
 
     constructor(
         @inject("DatabaseServer") private db: DatabaseServer,
@@ -93,7 +93,7 @@ export class AllInWeapon {
             }
         });
 
-        this.logger.success(ModConstants.ANYAMMO_MSG);
+        this.logger.success(MessageConstants.ANYAMMO);
     }
 
     private processMagazines(): void {
@@ -118,11 +118,11 @@ export class AllInWeapon {
             }
         });
 
-        this.logger.success(ModConstants.ANYMAG_MSG);
+        this.logger.success(MessageConstants.ANYMAG);
     }
 
     private processCursed(): void {
-        if (this.settings.Cursed === false)
+        if (this.settings.Cursed.Enable === false)
             return;
 
         this.itemsForFunc((item) => {
@@ -140,12 +140,18 @@ export class AllInWeapon {
                     const slotFilter: SlotFilter = slot._props.filters[slotFilterIndex];
 
                     slotFilter.Filter = [];
-                    slotFilter.Filter = [...this.allModIdList];
+                    if (this.settings.Cursed.FuckItAll) {
+                        slotFilter.Filter = [...this.allModIdList];
+                    } else
+                        slotFilter.Filter = [...this.modsIdBySlotCategory[slot._name]];
                 }
             }
         });
 
-        this.logger.success(ModConstants.CURSED_MSG);
+        if (this.settings.Cursed.FuckItAll) {
+            this.logger.warning(MessageConstants.CURSED_FUCKITALL);
+        } else
+            this.logger.success(MessageConstants.CURSED);
     }
 
     private itemsForFunc(method: (items: ITemplateItem) => void): void {

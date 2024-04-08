@@ -1,6 +1,9 @@
 {
    "Active": true,
-   "Cursed": false,
+   "Cursed": {
+      "Enable": true,
+      "FuckItAll": false
+   },
    "AllowAnyMag": true,
    "AllowAnyAmmo": true,
    "IDs": {

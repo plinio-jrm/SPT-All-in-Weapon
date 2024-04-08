@@ -22,6 +22,7 @@ class Mod implements IPostDBLoadMod {
         this.allInWeapon = container.resolve<AllInWeapon>(ClassConstants.ALL_IN_WEAPON);
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public postAkiLoad(container: DependencyContainer): void {
         this.logger.success(ModConstants.LOADED);
     }

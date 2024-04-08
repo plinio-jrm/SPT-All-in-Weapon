@@ -86,16 +86,25 @@ export class AllInWeapon {
                     this.addAmmoToFilter(cartridge._props.filters);
                 }
             }
+        });
+        this.processAmmo_UpdateWeaponByParent(this.settings.IDs.Weapon);
+
+        this.logger.success(MessageConstants.ANYAMMO);
+    }
+
+    private processAmmo_UpdateWeaponByParent(parentId: string): void {
+        this.itemsForFunc((item) => {
+            if (item._parent !== parentId)
+                return;
 
             if (this.isWeapon(item)) {
                 for (const index in item._props.Chambers) {
                     const chamber: Slot = item._props.Chambers[index];
                     this.addAmmoToFilter(chamber._props.filters);
                 }
-            }
+            } else
+                this.processAmmo_UpdateWeaponByParent(item._id);
         });
-
-        this.logger.success(MessageConstants.ANYAMMO);
     }
 
     private processMagazines(): void {
@@ -173,9 +182,9 @@ export class AllInWeapon {
     }
 
     private isWeapon(item: ITemplateItem): boolean {
-        if (item._parent !== this.settings.IDs.Weapon)
-            return false;
         if (item._props.Chambers === undefined)
+            return false;
+        if (item._props.Chambers.length == 0)
             return false;
 
         return true;

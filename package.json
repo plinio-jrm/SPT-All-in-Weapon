@@ -1,13 +1,16 @@
 {
     "name": "All in Weapon",
-    "version": "3.0.0",
+    "version": "3.0.2",
     "main": "src/mod.js",
     "license": "MIT",
     "author": "PlinioJRM",
     "akiVersion": "~3.8",
 	"loadBefore": [],
 	"loadAfter": [],
-	"incompatibilities": [],
+	"incompatibilities": [
+        "Guns_MFAC",
+        "MFAC Ammo"
+    ],
 	"contributors": [],
 	"isBundleMod": false,
     "scripts": {

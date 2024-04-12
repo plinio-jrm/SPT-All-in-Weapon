@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/indent */
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/brace-style */
 import { inject, injectable } from "tsyringe";
@@ -49,13 +50,11 @@ export class AllInWeapon {
                         for (const modIndex in slotFilter.Filter) {
                             const modId: string = slotFilter.Filter[modIndex];
 
-                            if (slot._name === ModConstants.MAG_SLOT_NAME) {
-                                // all the mods
-                                if (this.allModIdList === undefined) {
-                                    this.allModIdList = [modId];
-                                } else if (this.allModIdList.indexOf(modId) === -1)
-                                    this.allModIdList.push(modId);
-                            }
+                            // all the mods
+                            if (this.allModIdList === undefined) {
+                                this.allModIdList = [modId];
+                            } else if (this.allModIdList.indexOf(modId) === -1)
+                                this.allModIdList.push(modId);
 
                             // mods by slot category
                             if (this.modsIdBySlotCategory[slot._name] === undefined) {
@@ -151,17 +150,17 @@ export class AllInWeapon {
                     const slotFilter: SlotFilter = slot._props.filters[slotFilterIndex];
 
                     slotFilter.Filter = [];
-                    if (this.settings.Cursed.FuckItAll) {
-                        slotFilter.Filter = [...this.allModIdList];
-                    } else
+                    //if (this.settings.Cursed.FuckItAll) {
+                    //    slotFilter.Filter = [...this.allModIdList];
+                    //} else
                         slotFilter.Filter = [...this.modsIdBySlotCategory[slot._name]];
                 }
             }
         });
 
-        if (this.settings.Cursed.FuckItAll) {
-            this.logger.warning(MessageConstants.CURSED_FUCKITALL);
-        } else
+        //if (this.settings.Cursed.FuckItAll) {
+        //    this.logger.warning(MessageConstants.CURSED_FUCKITALL);
+        //} else
             this.logger.success(MessageConstants.CURSED);
     }
 
